@@ -3,7 +3,8 @@ import csv
 def collect_information(func):
     def wrapper(*args, **kwargs):
         information = func(*args, **kwargs)
-        products_list.append(information)
+        if information not in products_list:
+            products_list.append(information)
         return products_list
     return wrapper
 
@@ -26,9 +27,9 @@ with open("links_for_using.csv", "r", encoding="utf-8") as csvfile:
     for line in csv_reader:
         product = count_sale(line)
 
-
 products_list = sorted(products_list)
-print(products_list)
+
+# print(products_list)
 
 with open("products_for_site.csv", "r+", encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=';')
@@ -38,4 +39,4 @@ with open("products_for_site.csv", "r+", encoding="utf-8") as csvfile:
         if product not in csv_reader:
             csvfile.write(f"{';'.join(product)}\n")
 
-print(products_list)
+# print(products_list)
